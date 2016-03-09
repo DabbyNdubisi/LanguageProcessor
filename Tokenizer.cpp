@@ -16,17 +16,17 @@ string Tokenizer::normalize(string word)
   return "";
 }
 
-vector<string> Tokenizer::tokenizeSentence(string str)
+vector<string> Tokenizer::tokenizeSentence(string& str)
 {
   return split(str, '\n');
 }
 
-vector<string> Tokenizer::tokenizeWord(string sentence)
+vector<string> Tokenizer::tokenizeWord(string& sentence)
 {
   return split(sentence, ' ');
 }
 
-tuple<string, string> Tokenizer::extractWordTag(string word)
+tuple<string, string> Tokenizer::extractWordTag(string& word)
 {
   regex e("(.+\/?.*)\/(.+)");
   smatch sm;

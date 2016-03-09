@@ -1,22 +1,26 @@
-ifeq ($(CC),gcc)
-	lib = libstdc++
-	CC=g++
-else
-	lib = libc++
-	CC=clang++
+ifeq "$(OS)" ""
+	OS = $(shell uname -s)
 endif
 
-parser: Tokenizer.o utility.o main.o
-		$(CC) -std=c++11 -stdlib=$(lib) -o parser Tokenizer.o utility.o main.o
+ifeq "$(OS)" "Darwin"
+	LIB_FLAG = -stdlib=libc++
+	CC=clang++
+else
+	LIB_FLAG = 
+	CC=g++
+endif
 
-utility.o: utility.h utility.cpp Tokenizer.h
-	$(CC) -std=c++11 -stdlib=$(lib) -c utility.cpp
+parser: Tokenizer.o POSTagger.o main.o
+		$(CC) -std=c++11 $(LIB_FLAG) -o parser Tokenizer.o POSTagger.o main.o
 
-main.o: main.cpp utility.h
-	$(CC) -std=c++11 -stdlib=$(lib) -c main.cpp
+POSTagger.o: POSTagger.h POSTagger.cpp Tokenizer.h errorCodes.h
+	$(CC) -std=c++11 $(LIB_FLAG) -c POSTagger.cpp
 
-Tokenizer.o: Tokenizer.h Tokenizer.cpp
-	$(CC) -std=c++11 -stdlib=$(lib) -c Tokenizer.cpp
+main.o: main.cpp POSTagger.h errorCodes.h
+	$(CC) -std=c++11 $(LIB_FLAG) -c main.cpp
+
+Tokenizer.o: Tokenizer.h Tokenizer.cpp errorCodes.h
+	$(CC) -std=c++11 $(LIB_FLAG) -c Tokenizer.cpp
 
 clean:
-	rm parser *.o
+	rm parser *.o output.txt

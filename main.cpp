@@ -1,15 +1,14 @@
-#include "utility.h"
-#include "Tokenizer.h"
+#include "POSTagger.h"
 #include <iostream>
-#include <sstream>
 #include <fstream>
-#include <regex>
 using namespace std;
 
 int main()
 {
   ofstream out("output.txt");
-  vector<tuple<string, string>> examples = getTrainingData();
+  POSTagger tagger;
+  auto examples = vector<tuple<string, string>>();
+  tagger.getTrainingData(examples);
   for (auto i = 0; i < examples.size(); i++)
   {
       out << get<0>(examples[i]) << " : " << get<1>(examples[i]) << endl;
