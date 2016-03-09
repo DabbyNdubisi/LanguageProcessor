@@ -59,6 +59,7 @@ vector<tuple<string, string>> getTrainingData()
 {
   auto corpus = readCorpus("Corpus/");
   auto examples = vector<tuple<string, string>>();
+
   Tokenizer tokenizer;
   auto sentences = tokenizer.tokenizeSentence(corpus);
   for (auto sentence : sentences)
@@ -66,7 +67,11 @@ vector<tuple<string, string>> getTrainingData()
     auto words = tokenizer.tokenizeWord(sentence);
     for (auto word : words)
     {
-      examples.push_back(tokenizer.extractWordTag(word));
+      word = tokenizer.trim(word);
+      if(word.compare("") != 0)
+      {
+        examples.push_back(tokenizer.extractWordTag(word));
+      }
     }
   }
 

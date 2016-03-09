@@ -1,6 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <regex>
 #include "Tokenizer.h"
 
 using namespace std;
@@ -27,16 +28,16 @@ vector<string> Tokenizer::tokenizeWord(string sentence)
 
 tuple<string, string> Tokenizer::extractWordTag(string word)
 {
-  auto wordTagVector = split(word, '/');
-  if (wordTagVector.size() == 2)
+  regex e("(.+\/?.*)\/(.+)");
+  smatch sm;
+  if(regex_search(word, sm, e))
   {
-    return tuple<string, string>(trim(wordTagVector[0]), wordTagVector[1]);
+    return tuple<string, string>(sm[1], sm[2]);
   }
   else
   {
     return tuple<string, string>(word, "error");
   }
-
 }
 
 vector<string> Tokenizer::split(string &str,  char delimiter) {
@@ -52,18 +53,18 @@ vector<string> Tokenizer::split(string &str,  char delimiter) {
 }
 
 // trim from start
-inline string& Tokenizer::ltrim(string &s) {
+string& Tokenizer::ltrim(string &s) {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
         return s;
 }
 
 // trim from end
-inline string& Tokenizer::rtrim(string &s) {
+string& Tokenizer::rtrim(string &s) {
         s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
         return s;
 }
 
 // trim from both ends
-inline string& Tokenizer::trim(string &s) {
+string& Tokenizer::trim(string &s) {
         return ltrim(rtrim(s));
 }

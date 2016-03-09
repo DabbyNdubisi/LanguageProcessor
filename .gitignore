@@ -1,2 +1,4 @@
 Corpus/
 *.o
+parser
+output.txt
