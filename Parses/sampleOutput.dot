@@ -1,0 +1,15 @@
+digraph G { 
+ROOT [label="ROOT"]
+john[label="john"]
+bought[label="bought"]
+a[label="a"]
+shirt[label="shirt"]
+with[label="with"]
+pockets[label="pockets"]
+bought -> john
+ROOT -> bought
+shirt -> a
+bought -> shirt
+shirt -> with
+with -> pockets
+}

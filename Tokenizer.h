@@ -6,24 +6,14 @@
  * and normalizes the texts based on particular
  * parameters
  */
-#include <string>
-#include <vector>
-#include <tuple>
-#include <memory>
-#include <stdio.h>
-#include <algorithm>
-#include <functional>
-#include <cctype>
-#include <locale>
-
-using namespace std;
+#include "Dependencies.h"
 
 class Tokenizer
 {
-  string START = "-START-";
-  string END = "-END-";
+    string START = "-START-";
+    string END = "-END-";
 
-  public:
+public:
     Tokenizer();
 
     /*!
@@ -47,6 +37,8 @@ class Tokenizer
      *  @returns: word-Tag: tuple<string, string>
      */
     tuple<string, string> extractWordTag(string&);
+    
+    tuple<string, int> extractWordGoldHead(string&);
 
     // Helper Functions
     /*!
@@ -84,6 +76,27 @@ class Tokenizer
      *   @params: in word: string& (word to normalize)
      *  @returns: normalizedWord: string
      */
-    string normalize(string);
+    string normalize(string&);
+    
+    /*!
+     *  @desc: finds contractions and shortforms in given word and expands it
+     *         to a longer parse friendly version
+     *  @params: in word: string& (word to expand)
+     *  @returns: vector of new words. (will contain only one element if word didn't have a contraction)
+     */
+    vector<string> expandWordContraction(string&);
+    
+    
+    
+    vector<string> wordsBrownToPenn(vector<string>&);
+    
+    
+    /*!
+     *  @desc: tokenizes the sentence input from the user 
+     *         to match the expected input for our parser and tagger.
+     *  @params: (in) sentence: string& (sentence to tokenize)
+     *  @returns: vector of words, parsed according to what is expected by our syntax parser and POS tagger.
+     */
+    vector<string> tokenizeUserSentenceInput(string);
 };
 #endif

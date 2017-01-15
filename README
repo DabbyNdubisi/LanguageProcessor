@@ -1,0 +1,21 @@
+Author(s): Dabby Ndubisi
+
+This outlines the operating instructions for our Syntax Parser
+In order to provide a seamless process of loading the software,
+we included a Makefile.
+
+Operating Instructions
+-----------------------
+make
+./parser
+
+
+In order to view the created dependency tree as a png,
+Ensure you have the graphviz software and dot installed
+
+For any .dot file in the ./Parses directory, run the following:
+
+dot -T png -O ./Parses/<dot File>.dot
+
+This will create a png of the parse that can be viewed with your favoured
+image reader.
